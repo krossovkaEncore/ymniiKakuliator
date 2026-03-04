@@ -1,3 +1,5 @@
+import math, time
+
 # +=== Обычный калькулятор ===+
 def calculator():
     print("\n === Это обычный калькулятор, чтобы выйти введите exit. === \n")
@@ -92,19 +94,90 @@ def Rqes():
     else:
         print("Неверный выбор!")
 
+g = {
+    "moon": 2,
+    "mars": 4,
+    "earth": 10,
+    "jupiter": 25
+}
+
+# Математический маятник
+def matchPendulum():
+    print("=== Математический маятник ===")
+    
+    planet = input("Выбери планету (moon, mars, earth, jupiter): ").lower()
+    
+    if planet not in g:
+        print("Такой планеты нет.")
+        return
+    
+    L = float(input("Введите длину маятника (в метрах): "))
+    
+    gravity = g[planet]
+    
+    T = 2 * math.pi * math.sqrt(L / gravity)
+    v = 1 / T
+    
+    print("\nРезультаты:")
+    print(f"Ускорение свободного падения: {gravity} м/с²")
+    print(f"Период колебаний T = {T:.3f} секунд")
+    print(f"Частота колебаний v = {v:.3f} Гц")
+    print()
+
+
+# Пружинный маятник
+def springPendulum():
+    print("=== Пружинный маятник ===")
+    
+    m = float(input("Введите массу груза (в кг): "))
+    k = float(input("Введите жесткость пружины (Н/м): "))
+    
+    if k == 0:
+        print("Жесткость не может быть равна 0.")
+        return
+    
+    T = 2 * math.pi * math.sqrt(m / k)
+    v = 1 / T
+    
+    print("\nРезультаты:")
+    print(f"Период колебаний T = {T:.3f} секунд")
+    print(f"Частота колебаний v = {v:.3f} Гц")
+    print()
 
 #  +===  Точка входа  ===+
 if __name__ == "__main__":
-    num = int(input(
-        "Здравствуйте, я типо умный калькулятор и усе такое выберете что вам нужно:\n"
-        "1) Обычный калькулятор\n"
-        "2) I = q / t\n"
-        "3) R = q * (e / S)\n"
-        "\nВведите номер функции: "
-    ))
-    if num == 1:
-        calculator()
-    elif num == 2:
-        Iqt()
-    elif num == 3:
-        Rqes()
+    while True:
+        try:
+            num = int(input(
+                "Здравствуйте, я типо умный калькулятор и усе такое выберете что вам нужно:\n"
+                "0) Выход\n"
+                "1) Обычный калькулятор\n"
+                "2) I = q / t\n"
+                "3) R = q * (e / S)\n"
+                "4) математический маятник\n"
+                "5) пружинный маятник\n"
+                "\nВведите номер функции: "
+            ))
+            if num == 0:
+                exit()
+            elif num == 1:
+                calculator()
+                time.sleep(1)
+            elif num == 2:
+                Iqt()
+                time.sleep(1)
+            elif num == 3:
+                Rqes()
+                time.sleep(1)
+            elif num == 4:
+                matchPendulum()
+                time.sleep(1)
+            elif num == 5:
+                springPendulum()
+                time.sleep(1)
+            else:
+                print("Неверный ввод!")
+        except ValueError:
+            print("Неверный ввод!")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}") 
